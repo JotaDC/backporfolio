@@ -1,0 +1,73 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.argentinaprograma.backend.controller;
+
+import com.argentinaprograma.backend.models.Skill;
+
+import com.argentinaprograma.backend.services.SkillService;
+import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ *
+ * @author Javier
+ */
+
+@RestController
+@RequestMapping("/skill")
+public class SkillController {
+    private final SkillService skillService;
+
+    public SkillController(SkillService skillService) {
+        this.skillService = skillService;
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Skill>> obtenerSkill(){   
+        List<Skill> skill= skillService.buscarSkill();
+        return new ResponseEntity<>(skill,HttpStatus.OK);
+      
+    }
+    
+    @PutMapping("/update")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Skill> editarSkill(@RequestBody Skill skill){
+        Skill updateSkill=skillService.editarSkill(skill);
+        return new ResponseEntity<>(updateSkill,HttpStatus.OK);   
+    }
+    
+    @PostMapping("/add")
+     //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Skill> crearSkill(@RequestBody Skill skill){
+        Skill nuevaSkill=skillService.agregarSkill(skill);
+        return new ResponseEntity<>(nuevaSkill,HttpStatus.CREATED);
+    }
+    
+    @DeleteMapping("delete/{id}")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> borrarSkill(@PathVariable("id") Long id){
+        skillService.borrarSkill(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Skill> obtenerSkill(@PathVariable("id") Long id){   
+        Skill skill=skillService.buscarSkillPorId(id);
+        return new ResponseEntity<>(skill,HttpStatus.OK);
+      
+    }
+    
+    
+}
