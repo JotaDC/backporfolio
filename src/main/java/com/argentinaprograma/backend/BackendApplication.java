@@ -30,7 +30,7 @@ import org.springframework.web.util.pattern.PathPatternParser;
 @SpringBootApplication
 @RequiredArgsConstructor
 //implements CommandLineRunner
-public class BackendApplication {
+public class BackendApplication{
 final UserService userService;
 	public static void main(String[] args) {
             
@@ -59,7 +59,7 @@ final UserService userService;
   public ModelMapper modelMapper() {
     return new ModelMapper();
   }
-//para crear las cuentas de users and password
+//para crear las cuentas de users and password recordar poner implements CommandLineRunner la primera vez para que se generen la bases, luego comentar y subir.
 //  @Override
 //  public void run(String... params) throws Exception {
 //    AppUser admin = new AppUser();
